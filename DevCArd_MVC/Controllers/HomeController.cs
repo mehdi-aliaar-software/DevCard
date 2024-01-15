@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using DevCard_MVC.Data;
 
 namespace DevCard_MVC.Controllers
 {
@@ -21,6 +22,17 @@ namespace DevCard_MVC.Controllers
         {
             return View();
         }
+
+        public IActionResult ProjectDetails(int id) 
+        {
+            var project = ProjectStore.GetProjectBy(id);
+            if (project == null)
+            {
+                project = ProjectStore.GetProjectBy(1);
+            }
+            return View(project);
+        }
+
 
         [HttpGet]
         public IActionResult Contact()

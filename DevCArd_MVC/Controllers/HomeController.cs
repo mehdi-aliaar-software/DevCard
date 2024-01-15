@@ -47,25 +47,25 @@ namespace DevCard_MVC.Controllers
 
 
         [HttpPost]
-        public IActionResult Contact(Contact contact)
+        public IActionResult Contact(Contact model)
         {
 
-            contact.Services=new SelectList(_services, "Id","Name");    // for avoiding error on browser when returning to the page because of any validation=false!
+			//model.Services=new SelectList(_services, "Id","Name");    // for avoiding error on browser when returning to the page because of any validation=false!
 
-            if (ModelState.IsValid==false)
+            if (ModelState.IsValid==false &&  (ModelState.ErrorCount > 1 ||  (ModelState.ErrorCount==1 && model.Services!=null)  ))
             {
                 //====  ViewData makes error for null in initial action. so we use ViewBag instead:
                 //ViewData["error"] = "there is a problem with the data you entered. Try agian!";
                 ViewBag.error = "there is a problem with the data you entered. Try agian!";
-
-                return View(contact);
+				model.Services = new SelectList(_services, "Id", "Name");    // for avoiding error on browser when returning to the page because of any validation=false!
+				return View(model);
             }
 
             //return RedirectToAction("Index");
 
             ModelState.Clear();
 
-            contact = new Contact
+			model = new Contact
             {
                 Services = new SelectList(_services, "Id",
                     "Name") // for avoiding error on browser when returning to the page even on validated data!
@@ -75,7 +75,7 @@ namespace DevCard_MVC.Controllers
             //ViewData["success"] = "your message submitted successfully. Thanks";
             ViewBag.success = "your message submitted successfully. Thanks";
 
-            return View(contact);
+            return View(model);
         }
 
 

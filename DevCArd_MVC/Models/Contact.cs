@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DevCard_MVC.Models
 {
@@ -12,6 +13,7 @@ namespace DevCard_MVC.Models
         [EmailAddress(ErrorMessage = "a correct email format must be applied")]
         public string Email { get; set; }
         public string Message { get; set; }
-        public string Service { get; set; }
+        public int Service { get; set; }
+        public SelectList Services { get; set; }
     }
 }
